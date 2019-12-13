@@ -22,17 +22,15 @@ public class WebServiceTest {
         String sk = "asi1HHSYTPfbVZK33qpM1fXLclw="; //订购服务的secrectKey
         WSParams params = WSParams.create().accessKey(ak).secretKey(sk).api(apiName).version(apiVersion).nonce(true);
         Service service = new Service();// 首先，构造封装Call对象
-
         Call call = AxisCallWrapper.createCallWrapper(service, params);
         //或者使用WSParams进行参数设置
-
         // 然后，使用封装Call对象进行方法调用
         call.setTargetEndpointAddress("http://123.138.75.146:9082/Third-api-getPiMasterInfo/1.0.0/ws2ws");
         call.setOperationName(new QName("http://cxf.webservice.nhis.zebone.com/", "getPiMasterInfo"));
         call.setReturnType(org.apache.axis.encoding.XMLType.XSD_STRING);
         call.addParameter("param", // 设置要传递的参数
                 org.apache.axis.encoding.XMLType.XSD_STRING, javax.xml.rpc.ParameterMode.IN);
-        Object[] args = { "190021785" };
+        Object[] args = { "<req><codePi>190021785</codePi></req>" };
         // Object[] args = { "param" };
         Object ret = call.invoke(args);
         System.out.println("ret=" + ret);
